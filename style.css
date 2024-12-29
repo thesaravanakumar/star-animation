@@ -1,0 +1,214 @@
+:root {
+    --main-gradient: linear-gradient(90deg, #3498db, #9b59b6);
+    --main-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
+    --star-tail-length: 6em;
+    --star-tail-height: 2px;
+    --star-width: calc(var(--star-tail-length) / 6);
+    --fall-duration: 6s;
+    --tail-fade-duration: 8s;
+    --star-color-blue: #3498db;
+    --star-color-white: #fff;
+    --card-bg: rgba(255, 255, 255, 0.1); /* Transparent background for a glass effect */
+    --card-hover-bg: rgba(255, 255, 255, 0.2); /* Slightly more opaque on hover */
+    --card-border-color: rgba(255, 255, 255, 0.3); /* Light transparent border */
+    --card-hover-border-color: rgba(255, 255, 255, 0.7); /* Brighter border on hover */
+    --card-shadow-color: rgba(0, 0, 0, 0.2); /* Soft shadow for glass effect */
+    --card-radius: 15px;
+    --heading-font-size: 1.4rem;
+    --paragraph-font-size: 1rem;
+    --heading-font-family: 'Poppins', sans-serif;
+    --paragraph-font-family: 'Lora', serif;
+    --heading-hover-color: linear-gradient(45deg, #f16220, #ff007f); /* Gradient for hover */
+    --heading-animation-duration: 0.5s;
+    --heading-hover-size: 1.6rem; /* New size for heading when hovered */
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: radial-gradient(ellipse at bottom, #0d1d31 0%, #0c0d13 100%);
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+header {
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    margin: 20px 0;
+    z-index: 1;
+}
+
+.main-heading {
+    font-size: 3.5rem;
+    font-weight: 700;
+    background: var(--main-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: var(--main-shadow);
+    margin: 0 0 20px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    letter-spacing: 2px;
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+    cursor: default;
+}
+
+.main-heading:hover {
+    transform: scale(1.1);
+    text-shadow: 0px 15px 30px rgba(0, 0, 0, 0.8);
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+}
+
+.tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border-color);
+    border-radius: var(--card-radius);
+    width: 250px;
+    margin: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 15px var(--card-shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    backdrop-filter: blur(10px); /* Adds glass-like blur effect */
+}
+
+.tool-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+    background-color: var(--card-hover-bg);
+    border-color: var(--card-hover-border-color);
+}
+
+.tool-card:active {
+    transform: translateY(-2px) scale(0.98);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.tool-card h2 {
+    font-size: var(--heading-font-size);
+    font-weight: 700;
+    font-family: var(--heading-font-family);
+    margin: 10px 0;
+    background: linear-gradient(45deg, #f39c12, #e74c3c); /* Vibrant pink-orange gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: var(--main-shadow);
+    letter-spacing: 1px;
+    transition: transform var(--heading-animation-duration) ease, color var(--heading-animation-duration) ease, font-size 0.3s ease;
+}
+
+.tool-card:hover h2 {
+    transform: scale(1.2); /* Enlarge the heading when hovering over the card */
+    background: var(--heading-hover-color); /* Apply hover gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5); /* Enhanced shadow for hover effect */
+}
+
+.tool-card p {
+    font-size: var(--paragraph-font-size);
+    font-family: var(--paragraph-font-family);
+    color: #dfe6e9;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%;
+    transform: rotate(-45deg);
+    z-index: -1;
+}
+
+.star {
+    --fall-delay: 0s;
+
+    position: absolute;
+    top: var(--top-offset);
+    left: var(--left-offset);
+    width: var(--star-tail-length);
+    height: var(--star-tail-height);
+    color: var(--star-color-blue); /* Default blue color */
+    background: linear-gradient(45deg, currentColor, transparent);
+    border-radius: 50%;
+    filter: drop-shadow(0 0 6px currentColor);
+    transform: translate3d(104em, 0, 0);
+    animation: fall var(--fall-duration) var(--fall-delay) linear infinite, tail-fade var(--tail-fade-duration) var(--fall-delay) ease-out infinite;
+}
+
+.star.blue {
+    color: var(--star-color-blue);
+}
+
+.star.white {
+    color: var(--star-color-white);
+}
+
+.star::before,
+.star::after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: calc(var(--star-width) / -2);
+    width: var(--star-width);
+    height: 100%;
+    background: linear-gradient(45deg, transparent, currentColor, transparent);
+    border-radius: inherit;
+    animation: blink 2s linear infinite;
+}
+
+.star::before {
+    transform: rotate(45deg);
+}
+
+.star::after {
+    transform: rotate(-45deg);
+}
+
+@keyframes fall {
+    to {
+        transform: translate3d(-30em, 0, 0);
+    }
+}
+
+@keyframes tail-fade {
+    0%, 50% {
+        width: var(--star-tail-length);
+        opacity: 1;
+    }
+    70%, 80% {
+        width: 0;
+        opacity: 0.4;
+    }
+    100% {
+        width: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0.6;
+    }
+}
+
+
+
